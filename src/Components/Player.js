@@ -1,32 +1,36 @@
 import React from "react";
 
-import Button from "./Button";
+import Button from './Button';
 
 import { Card, PlayerHand } from "../Styles/Styled";
 
-const Player = ({ name }) => (
+const Player = ({ player, removePlayer, enablePlayerHandEdit }) => (
 	<article>
 		<p>
-			{name}
-			<Button icon="✏️">Edit</Button>
-			<Button icon="🔥">Remove</Button>
+      {player.name}
+      <Button
+        icon="✏️"
+        handleClick={() => {enablePlayerHandEdit(player.id)}}
+        altText='pencil'
+        ariaLabel='edit player'>
+          Edit
+      </Button>
+      <Button
+        icon="🔥"
+        handleClick={() => removePlayer(player.id)}
+        altText='fire'
+        ariaLabel='delete player'>
+          Remove
+      </Button>
 		</p>
-		<PlayerHand>
-				<Card suit="D" value="A" selected={true}>
-					A
-				</Card>
-				<Card suit="D" value="K">
-					K
-				</Card>
-				<Card suit="D" value="Q">
-					Q
-				</Card>
-				<Card suit="D" value="J">
-					J
-				</Card>
-				<Card suit="D" value="T">
-					T
-				</Card>
+    <PlayerHand>
+      {player.hand.length ? player.hand.map(card => {
+        return (
+          <Card key={card} suit={card[0]} value={card[1]} selected={false}>
+            {card[1]}
+          </Card>
+        )
+      }) : 'Add cards for your new player'}
 		</PlayerHand>
 	</article>
 );
