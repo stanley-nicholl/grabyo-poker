@@ -17,11 +17,11 @@ const players = [
 
 describe(`Card deck`, () => {
   const deck = mount(<Deck suits={suits} values={values} players={players} />)
-	test('renders the right amount of cards', () => {
+	it('renders the right amount of cards', () => {
 		expect(deck.find(Card)).toHaveLength(52);
   });
   
-  test('renders cards as selected if they are included in player hand', () => {
+  it('renders cards as selected if they are included in player hand', () => {
     expect(deck.find({ prop: 'selected'}).to.have.lengthOf(1))
   })
 });
