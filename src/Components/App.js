@@ -10,13 +10,35 @@ import Button from "./Button";
 import { Footer } from "../Styles/Styled";
 
 class App extends Component {
+  state = {
+    players: [],
+    canEdit: false
+  }
+
+  componentDidMount() {
+    const initialPlayers = [
+      {
+        index: 0,
+        player: 'Player 1',
+        hand: ['HA']
+      },
+      {
+        index: 1,
+        player: 'Player 2',
+        hand: ['S6']
+      }
+    ]
+    this.setState({ players: initialPlayers });
+  };
+
 	render() {
+    const { players, canEdit } = this.state;
 		return (
 				<Layout>
 
 					<section>
 						<h1>Cards deck</h1>
-						<Deck suits={suits} values={values} />
+						<Deck suits={suits} values={values} players={players} canEdit={canEdit} />
 					</section>
 					<section>
 						<header>
