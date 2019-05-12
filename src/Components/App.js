@@ -9,26 +9,31 @@ import Button from './Button'
 
 import { Footer } from "../Styles/Styled";
 
+const initialPlayers = [
+  {
+    id: 0,
+    name: 1,
+    hand: ['HA', 'D4', 'C9', 'HJ', 'DJ'],
+    selectedCard: '',
+    canEditHand: false
+  },
+  {
+    id: 1,
+    name: 2,
+    hand: ['S6', 'S7', 'S8', 'S9', 'ST'],
+    selectedCard: '',
+    canEditHand: false
+  }
+]
+
 class App extends Component {
   state = {
     players: [],
+    canSelectCardFromDeck: false,
+    targetedPlayerHand: -1
   }
 
   componentDidMount() {
-    const initialPlayers = [
-      {
-        id: 0,
-        name: 'Player 1',
-        hand: ['HA', 'D4', 'C9', 'HJ', 'DJ'],
-        canEditHand: false
-      },
-      {
-        id: 1,
-        name: 'Player 2',
-        hand: ['S6', 'S7', 'S8', 'S9', 'ST'],
-        canEditHand: false
-      }
-    ]
     this.setState({ players: initialPlayers });
   };
 
@@ -40,29 +45,93 @@ class App extends Component {
   }
 
   addPlayer = () => {
-    const { players } = this.state;
+    let { players } = this.state;
+
     if(players.length === 6) return null;
+
     const newPlayer = {
       id: players.length,
-      name: `Player ${players.length + 1}`,
+      name: players[players.length - 1].name + 1,
       hand: [],
-      canEditHand: false
+      selectedCard: '',
+      canEditHand: true
     };
-    this.setState({ players: [ ...players, newPlayer ]})
+
+    players = players.map(player => {
+      player.canEditHand = false;
+      player.selectedCard = '';
+      return player;
+    })
+
+    players.push(newPlayer)
+
+    this.setState({ players, targetedPlayerHand: players.length - 1, canSelectCardFromDeck: true })
   }
 
+  //checks to see if a player can edit their hand, if so, sets a target hand to receive (or swap) selected cards
   enablePlayerHandEdit = (id) => {
-    const players = this.state.players;
+    let canSelectCardFromDeck, targetedPlayerHand;
+
+    const players = this.state.players.map(player => {
+      player.canEditHand = id === player.id ? !player.canEditHand : false;
+      canSelectCardFromDeck = player.hand.length < 5 ? true : false;
+      targetedPlayerHand = player.hand.length < 5 ? id : -1 ;
+      if(!player.canEditHand) player.selectedCard = '';
+      return player;
+    });
+
+    this.setState({ players, canSelectCardFromDeck, targetedPlayerHand });
+  }
+
+  //targets a card in a players hand to swap for an unused card in the deck
+  selectCardInHand = (card, playerId) => {
+    const { players } = this.state;
+    const player = players[playerId];
+
+    if(!player.canEditHand) return null;
+
+    player.selectedCard = player.hand[player.hand.indexOf(card)];
+    players[playerId] = player;
+    const canSelectCardFromDeck = true;
+    const targetedPlayerHand = playerId
+
+    this.setState({ players, canSelectCardFromDeck, targetedPlayerHand })
+  }
+
+  //adds cards (in the case a player has < 5 cards) or swaps a new card in the players hand
+  addCardToHand = (card) => {
+    const { canSelectCardFromDeck, players, targetedPlayerHand } = this.state;
+    if(!canSelectCardFromDeck) return null;
+
+    const player = players[targetedPlayerHand];
+    const { hand, selectedCard } = player;
+    if(hand.length < 5) {
+      hand.push(card);
+    }else{
+      const index = hand.indexOf(selectedCard);
+      hand[index] = card
+    }
+    player.hand = hand;
+    player.selectedCard = card;
+
+    players[targetedPlayerHand] = player
+    this.setState({ players });
   }
 
 	render() {
-    const { players, canEdit } = this.state;
+    const { players, canSelectCardFromDeck } = this.state;
 		return (
 				<Layout>
 
 					<section>
 						<h1>Cards deck</h1>
-						<Deck suits={suits} values={values} players={players} canEdit={canEdit} />
+            <Deck
+              suits={suits}
+              values={values}
+              players={players}
+              canSelectCardFromDeck={canSelectCardFromDeck}
+              addCardToHand={this.addCardToHand}
+            />
 					</section>
 					<section>
 						<header>
@@ -75,6 +144,7 @@ class App extends Component {
                   player={player}
                   enablePlayerHandEdit={this.enablePlayerHandEdit}
                   removePlayer={this.removePlayer}
+                  selectCardInHand={this.selectCardInHand}
                 />))}
 						</section>
             <Footer>

@@ -68,7 +68,15 @@ export const Card = styled.div`
 			border-color: white;
 		`
 		: null
-	}
+  }
+  
+  ${props => props.canSelectCardFromDeck
+    ? css`
+      cursor: pointer;
+    `
+
+    : null
+  }
 `
 
 export const Footer = styled.footer`
@@ -84,6 +92,7 @@ export const StyledButton = styled.button`
 	color: #eee;
   padding: .5em;
   margin-left: 1rem;
+  cursor: pointer;
 
 	& + & {
 		margin-left: 20px;
@@ -94,11 +103,24 @@ export const PlayerHand = styled.div`
 	background: #888;
 	padding: 10px;
 	border-radius: 5px;
-	min-height: 55px;
+  min-height: 55px;
+  border: 2px solid #888;
+
+  
+  ${props => props.playerCanEdit
+		? css`
+      background-color: #fff;
+      border: 2px solid #f03e55;
+      cursor: pointer;
+		`
+		: null
+	}
 
 	${Card} {
 		margin: 5px;
-	}
+  }
+  
+  
 `;
 
 export const StyledDeck = styled.section`
