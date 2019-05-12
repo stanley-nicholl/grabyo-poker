@@ -5,31 +5,55 @@ import { suits, values } from "../utils";
 import Layout from "./Layout";
 import Deck from "./Deck";
 import Player from "./Player";
-import Button from "./Button";
+import Button from './Button'
 
 import { Footer } from "../Styles/Styled";
 
 class App extends Component {
   state = {
     players: [],
-    canEdit: false
   }
 
   componentDidMount() {
     const initialPlayers = [
       {
-        index: 0,
-        player: 'Player 1',
-        hand: ['HA']
+        id: 0,
+        name: 'Player 1',
+        hand: ['HA', 'D4', 'C9', 'HJ', 'DJ'],
+        canEditHand: false
       },
       {
-        index: 1,
-        player: 'Player 2',
-        hand: ['S6']
+        id: 1,
+        name: 'Player 2',
+        hand: ['S6', 'S7', 'S8', 'S9', 'ST'],
+        canEditHand: false
       }
     ]
     this.setState({ players: initialPlayers });
   };
+
+  removePlayer = (id) => {
+    const players = this.state.players;
+    const index = players.map(player => player.id).indexOf(id);
+    players.splice(index, 1);
+    this.setState({ players });
+  }
+
+  addPlayer = () => {
+    const { players } = this.state;
+    if(players.length === 6) return null;
+    const newPlayer = {
+      id: players.length,
+      name: `Player ${players.length + 1}`,
+      hand: [],
+      canEditHand: false
+    };
+    this.setState({ players: [ ...players, newPlayer ]})
+  }
+
+  enablePlayerHandEdit = (id) => {
+    const players = this.state.players;
+  }
 
 	render() {
     const { players, canEdit } = this.state;
@@ -44,13 +68,30 @@ class App extends Component {
 						<header>
 							<h1>Players</h1>
 						</header>
-						<section>
-							<Player name="Player 1" />
-							<Player name="Player 2" />
+            <section>
+              {players.map(player => (
+                <Player
+                  key={player.id}
+                  player={player}
+                  enablePlayerHandEdit={this.enablePlayerHandEdit}
+                  removePlayer={this.removePlayer}
+                />))}
 						</section>
-						<Footer>
-							<Button icon="🙋‍♀️">Add new player</Button>
-							<Button icon="🏆">Find the winner</Button>
+            <Footer>
+              <Button
+                icon="🙋‍♀️"
+                handleClick={() => {this.addPlayer()}}
+                altText='woman raising hand'
+                ariaLabel='add player'>
+                  Add new player
+              </Button>
+              <Button
+                icon="🏆"
+                handleClick={() => {}}
+                altText='trophy'
+                ariaLabel='find winner'>
+                  Find winner
+              </Button>
 						</Footer>
 					</section>
 
