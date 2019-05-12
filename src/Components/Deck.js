@@ -1,15 +1,21 @@
 import React, { Fragment } from "react";
 import { Card, StyledDeck } from "../Styles/Styled";
 
-const Deck = ({ suits, values }) => (
+const checkSelected = (card, players) => {
+  return !!players.filter(player => player.hand.includes(card)).length;
+}
+
+const Deck = ({ suits, values, players, canEdit }) => (
 	<StyledDeck>
 		{suits.map(suit => (
 			<Fragment key={suit}>
-				{values.map(value => (
-					<Card key={suit+value} suit={suit} value={value}>
+				{values.map(value => {
+          const selected = checkSelected(suit + value, players);
+          return (
+					<Card key={suit+value} suit={suit} value={value} selected={selected}>
 						{value}
 					</Card>
-				))}
+				)})}
 			</Fragment>
 		))}
 	</StyledDeck>
