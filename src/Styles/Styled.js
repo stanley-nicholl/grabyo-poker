@@ -82,7 +82,8 @@ export const StyledButton = styled.button`
 	border: 1px solid #eee;
 	border-radius: 5px;
 	color: #eee;
-	padding: .5em;
+  padding: .5em;
+  margin-left: 1rem;
 
 	& + & {
 		margin-left: 20px;
