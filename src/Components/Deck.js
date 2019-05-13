@@ -24,15 +24,15 @@ const Deck = ({ suits, values, players, canSelectCardFromDeck, addCardToHand }) 
       {suits.map(suit => (
         <Fragment key={suit}>
           {values.map(value => {
-            const selected = checkSelected(suit + value, players);
+            const selected = checkSelected(value + suit, players);
             return (
             <Card
-              key={suit+value}
+              key={value + suit}
               suit={suit}
               value={value}
               selected={selected}
               canSelectCardFromDeck={canSelectCardFromDeck}
-              onClick={() => {handleSelect(suit+value, selected)}}
+              onClick={() => {handleSelect(value + suit, selected)}}
             >
               {value}
             </Card>

@@ -1,40 +1,29 @@
 import React, { Component } from 'react';
 
-import { suits, values } from "../utils";
+import * as Poker from 'poker-hands';
+
+import { suits, values, createInitialGameSettings } from "../utils";
 
 import Layout from "./Layout";
 import Deck from "./Deck";
 import Player from "./Player";
 import Button from './Button'
+import WinnerModal from './Winner_Modal';
 
 import { Footer } from "../Styles/Styled";
-
-const initialPlayers = [
-  {
-    id: 0,
-    name: 1,
-    hand: ['HA', 'D4', 'C9', 'HJ', 'DJ'],
-    selectedCard: '',
-    canEditHand: false
-  },
-  {
-    id: 1,
-    name: 2,
-    hand: ['S6', 'S7', 'S8', 'S9', 'ST'],
-    selectedCard: '',
-    canEditHand: false
-  }
-]
 
 class App extends Component {
   state = {
     players: [],
     canSelectCardFromDeck: false,
-    targetedPlayerHand: -1
+    targetedPlayerHand: -1,
+    winner: null,
+    showWinner: false
   }
 
   componentDidMount() {
-    this.setState({ players: initialPlayers });
+    const players = createInitialGameSettings();
+    this.setState({ players });
   };
 
   removePlayer = (id) => {
@@ -118,11 +107,58 @@ class App extends Component {
     this.setState({ players });
   }
 
+  findWinner = () => {
+    let { players } = this.state;
+    const hands = [];
+    let allCardsDealt = true;
+    players.forEach(player => {
+      if(player.hand.length !== 5) allCardsDealt = false;
+      hands.push(player.hand.join(' '));
+    })
+
+    if(!allCardsDealt) {
+      alert('Please make sure all players have five cards first');
+      return null;
+    }
+
+    let winningIndex = 0;
+    hands.forEach((hand, index) => {
+      if(index !== hands.length - 1) {
+        const winner = Poker.judgeWinner([hands[index], hands[index + 1]])
+        if(winner) {
+          winningIndex = index + 1;
+        }
+      }
+    })
+
+    players = players.map(player => {
+      player.canEditHand = false;
+      player.selectedCard = '';
+      return player;
+    })
+
+    this.setState({ winner: winningIndex, showWinner: true, players })
+  }
+
+  hideWinnerModal = () => {
+    this.setState({ showWinner: false })
+  }
+
+  playAgain = () => {
+    const players = createInitialGameSettings();
+    this.setState({ players, showWinner: false, winner: null });
+  }
+
 	render() {
-    const { players, canSelectCardFromDeck } = this.state;
+    const { players, canSelectCardFromDeck, showWinner, winner } = this.state;
 		return (
 				<Layout>
-
+          {showWinner && 
+            <WinnerModal
+              winner={players[winner]}
+              hideWinnerModal={this.hideWinnerModal}
+              playAgain={this.playAgain}
+            />}
 					<section>
 						<h1>Cards deck</h1>
             <Deck
@@ -157,7 +193,7 @@ class App extends Component {
               </Button>
               <Button
                 icon="🏆"
-                handleClick={() => {}}
+                handleClick={() => {this.findWinner()}}
                 altText='trophy'
                 ariaLabel='find winner'>
                   Find winner
