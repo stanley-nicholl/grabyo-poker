@@ -114,12 +114,12 @@ export const PlayerHand = styled.div`
       cursor: pointer;
 		`
 		: null
-	}
+  }
+
 
 	${Card} {
 		margin: 5px;
   }
-  
   
 `;
 
@@ -132,4 +132,63 @@ export const StyledDeck = styled.section`
 	${Card} {
 		margin: 10px auto;
 	}
+`;
+
+export const StyledModal = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 5px;
+  z-index: 100;
+
+  .modal-content {
+    width: 80%;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    color: red;
+    text-align: center;
+  }
+
+  .winning-deck{
+    width: 60%;
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  button {
+    padding: .5rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    background: #fff;
+    border: 1px solid #f03e55;
+    border-radius: 5px;
+    color: #000;
+    padding: 1rem 3rem;
+    margin-top: 3rem;
+    cursor: pointer;
+    transition: all .2s ease-in;
+  }
+
+  button:hover {
+    background-color: #f03e55;
+    color: #fff;
+  }
+`;
+
+export const StyledModalBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.7);
+  z-index: 90;
 `;
