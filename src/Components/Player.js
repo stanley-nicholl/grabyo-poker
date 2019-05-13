@@ -35,17 +35,17 @@ const Player = ({ player,
             Remove
         </Button>
       </p>
-      <PlayerHand playerCanEdit={player.canEditHand}>
+      <PlayerHand playerCanEdit={player.canEditHand} winner={player.winner}>
         {player.hand.length ? player.hand.map(card => {
           return (
             <Card
               key={card}
-              suit={card[0]}
-              value={card[1]}
+              suit={card[1]}
+              value={card[0]}
               selected={player.selectedCard === card}
               onClick={() => handleCardSelect(card, player.id)}
             >
-              {card[1]}
+              {card[0]}
             </Card>
           )
         }) : 'Add cards for your new player'}
