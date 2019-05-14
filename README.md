@@ -11,7 +11,7 @@ Add in React DnD to let people drag cards in and out of hands
 
 ### Note to Germain
 
-Thanks for the opportunity to interview with you. I really enjoyed the challenge and would be happy to discuss any of my code with you. Have a great day!
+Thanks for the opportunity to interview with your team. I really enjoyed the challenge and would be happy to discuss any of my code with you. Have a great day!
 
 <br/>
 
