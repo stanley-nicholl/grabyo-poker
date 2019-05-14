@@ -13,7 +13,7 @@ const WinnerModal = ({ winner, hideWinnerModal, playAgain }) => {
 
       <StyledModal>
         <div className='modal-content'>
-          <h1>{`Player ${winner.name} wins!`}</h1>
+          <h1>{`${winner.name} wins!`}</h1>
           <p>With a hand of:</p>
           <div className='winning-deck'>
             {winner.hand.map(card => {

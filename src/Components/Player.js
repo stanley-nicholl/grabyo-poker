@@ -19,7 +19,7 @@ const Player = ({ player,
   return (
     <article>
       <p>
-        {`Player ${player.name}`}
+        <span>{`Player: ${player.name}`}</span>
         <Button
           icon="✏️"
           className='enable-edit__button'
