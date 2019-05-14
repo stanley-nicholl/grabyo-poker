@@ -130,16 +130,15 @@ class Game extends Component {
     }
 
     let winningIndex = 0;
+    let winningHand = hands[0];
 
     for(let i = 0; i < hands.length - 1; i++) {
       // console.log(hands[i], '-', hands[i + 1], '-', i)
-      const winner = Poker.judgeWinner([hands[i], hands[i + 1]])
+      const winner = Poker.judgeWinner([hands[i], winningHand])
       
-      if(winner) {
-        console.log(hands[i + 1])
-        winningIndex = i + 1;
-      }else{
-        console.log(hands[i])
+      if(!winner) {
+        winningIndex = i;
+        winningHand = hands[i]
       }
     }
 
