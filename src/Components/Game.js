@@ -195,9 +195,10 @@ class Game extends Component {
 							<h1>Players</h1>
 						</header>
             <section>
-              {players.map(player => (
+              {players.map((player, index) => (
                 <Player
                   key={player.id}
+                  playerNo={index + 1}
                   player={player}
                   enablePlayerHandEdit={this.enablePlayerHandEdit}
                   removePlayer={this.removePlayer}

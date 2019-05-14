@@ -7,7 +7,8 @@ import { Card, PlayerHand } from "../Styles/Styled";
 const Player = ({ player,
   removePlayer,
   enablePlayerHandEdit,
-  selectCardInHand
+  selectCardInHand,
+  playerNo
 }) => {
 
   //logic to check if a player can edit their hand (aka, have the clicked edit)
@@ -19,7 +20,7 @@ const Player = ({ player,
   return (
     <article>
       <p>
-        <span>{`Player: ${player.name}`}</span>
+        <span>{`Player ${playerNo}: ${player.name}`}</span>
         <Button
           icon="✏️"
           className='enable-edit__button'
