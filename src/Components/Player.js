@@ -22,6 +22,7 @@ const Player = ({ player,
         {`Player ${player.name}`}
         <Button
           icon="✏️"
+          className='enable-edit__button'
           handleClick={() => enablePlayerHandEdit(player.id)}
           altText='pencil'
           ariaLabel='edit player'>
@@ -48,7 +49,7 @@ const Player = ({ player,
               {card[0]}
             </Card>
           )
-        }) : 'Add cards for your new player'}
+        }) : <p className='empty-hand__message'>Add cards for your new player</p>}
       </PlayerHand>
     </article>
 )};
