@@ -4,7 +4,9 @@ export const suits = ["D", "H", "S", "C"];
 export const getColourForSuit = suit => suit === "D" || suit === "H" ? "red" : "black";
 
 const autoGenerateHands = () => {
-  const deck = suits.map(suit => values.map(value => value + suit)).flat();
+  // const deck = suits.map(suit => values.map(value => value + suit)).flat();
+  const suitArrays = suits.map(suit => values.map(value => value + suit));
+  const deck = suitArrays[0].concat(suitArrays[1], suitArrays[2], suitArrays[3]);
   const playerOneHand = [];
   const playerTwoHand = [];
   for(let i = 0; i < 5; i++) {
@@ -19,7 +21,7 @@ const autoGenerateHands = () => {
   return [playerOneHand, playerTwoHand];
 }
 
-export const createInitialGameSettings = () => {
+export const createInitialGameState = () => {
 
   const initialHands = autoGenerateHands();
 
