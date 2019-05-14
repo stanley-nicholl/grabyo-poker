@@ -106,6 +106,10 @@ export const PlayerHand = styled.div`
   min-height: 55px;
   border: 2px solid #888;
 
+  .empty-hand__message {
+    color: #000;
+  }
+
   
   ${props => props.playerCanEdit
 		? css`
@@ -138,6 +142,7 @@ export const StyledModal = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
+  min-width: 30rem;
   transform: translate(-50%, -50%);
   background-color: #fff;
   border-radius: 5px;
@@ -156,9 +161,12 @@ export const StyledModal = styled.div`
     text-align: center;
   }
 
+  p {
+    color: #000;
+  }
+
   .winning-deck{
     width: 60%;
-    margin-top: 3rem;
     display: flex;
     justify-content: space-around;
   }
