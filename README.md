@@ -13,4 +13,4 @@ Add in React DnD to let people drag cards in and out of hands
 
 Thanks for the opportunity to interview with you. I really enjoyed the challenge and would be happy to discuss any of my code with you. Have a great day!
 
-![Dogs playing poker](https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiVj8rozpviAhUOkRQKHRczCW8QjRx6BAgBEAU&url=https%3A%2F%2Fwww.artsy.net%2Farticle%2Fartsy-editorial-painting-dogs-playing-poker-endured-100-years&psig=AOvVaw3pCP8HiI91foT8PtlvWrmp&ust=1557943729421041)
+![Dogs playing poker](https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FphSxLtPuOSPsnJF0obkh5A%252FA_Friend_in_Need_1903_C.M.Coolidge.jpg&width=1200&quality=80)
