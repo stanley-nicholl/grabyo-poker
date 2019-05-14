@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import * as Poker from 'poker-hands';
+import * as faker from 'faker';
 
 import { suits, values, createInitialGameState } from "../utils";
 
@@ -45,7 +46,7 @@ class Game extends Component {
 
     const newPlayer = {
       id: players[players.length - 1].id + 1,
-      name: players[players.length - 1].name + 1,
+      name: faker.name.findName(),
       hand: [],
       selectedCard: '',
       canEditHand: true
@@ -60,7 +61,7 @@ class Game extends Component {
 
     players.push(newPlayer)
 
-    this.setState({ players, targetedPlayerHand: players.length - 1, canSelectCardFromDeck: true })
+    this.setState({ players, targetedPlayerHand: newPlayer.id, canSelectCardFromDeck: true })
   }
 
   //checks to see if a player can edit their hand, if so, sets a target hand to receive (or swap) selected cards
@@ -95,8 +96,10 @@ class Game extends Component {
 
   //adds cards (in the case a player has < 5 cards) or swaps a new card in the players hand
   addCardToHand = (card) => {
+    
     const { canSelectCardFromDeck, players, targetedPlayerHand } = this.state;
     if(!canSelectCardFromDeck) return null;
+
 
     const player = players.filter(player => {
       return player.id === targetedPlayerHand;
@@ -132,11 +135,10 @@ class Game extends Component {
     let winningIndex = 0;
     let winningHand = hands[0];
 
-    for(let i = 0; i < hands.length - 1; i++) {
-      // console.log(hands[i], '-', hands[i + 1], '-', i)
-      const winner = Poker.judgeWinner([hands[i], winningHand])
+    for(let i = 1; i < hands.length; i++) {
+      const winner = Poker.judgeWinner([winningHand, hands[i]]);
       
-      if(!winner) {
+      if(winner) {
         winningIndex = i;
         winningHand = hands[i]
       }
